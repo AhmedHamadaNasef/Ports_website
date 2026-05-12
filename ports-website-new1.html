@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>البورتات المعروفة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0f1419;
+    --bg-card: #1a1f2e;
+    --bg-hover: #252d3d;
+    --text-primary: #e8eaed;
+    --text-secondary: #9ca3af;
+    --accent: #00d4ff;
+    --accent-dark: #0099cc;
+    --card-border: #2d3748;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --web: #3b82f6;
+    --email: #ec4899;
+    --file: #14b8a6;
+    --remote: #f97316;
+    --dns: #a855f7;
+    --net: #06b6d4;
+    --db: #8b5cf6;
+    --sec: #ef4444;
+  }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  #page {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    min-height: 100vh;
+    gap: 20px;
+  }
+
+  #list-view {
+    padding: 2rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    background: var(--bg-card);
+    border: 1.5px solid var(--card-border);
+    border-radius: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+  }
+
+  .search-wrap input::placeholder {
+    color: var(--text-secondary);
+  }
+
+  /* ── TABLE GRID ── */
+  #grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--card-border);
+    cursor: pointer;
+    transition: all 0.25s;
+    border-left: 3px solid transparent;
+  }
+
+  .card:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .card:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .card:hover {
+    background: var(--bg-hover);
+    border-left-color: var(--accent);
+    padding-right: 2rem;
+  }
+
+  .card-port {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .card-service {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .card-short {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .card-proto {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .t-web { background: rgba(59, 130, 246, 0.15); color: var(--web); }
+  .t-email { background: rgba(236, 72, 153, 0.15); color: var(--email); }
+  .t-file { background: rgba(20, 184, 166, 0.15); color: var(--file); }
+  .t-remote { background: rgba(249, 115, 22, 0.15); color: var(--remote); }
+  .t-dns { background: rgba(168, 85, 247, 0.15); color: var(--dns); }
+  .t-net { background: rgba(6, 182, 212, 0.15); color: var(--net); }
+  .t-db { background: rgba(139, 92, 246, 0.15); color: var(--db); }
+  .t-sec { background: rgba(239, 68, 68, 0.15); color: var(--sec); }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    padding: 2rem 1rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+    margin-top: 5rem;
+  }
+
+  .sidebar-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cat-btn {
+    padding: 0.7rem 0.8rem;
+    background: transparent;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: right;
+  }
+
+  .cat-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── DETAIL PAGE ── */
+  #detail {
+    display: none;
+    grid-column: 1 / -1;
+    padding: 2rem;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.6rem 1.2rem;
+    background: var(--bg-card);
+    border: 1.5px solid var(--card-border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: all 0.2s;
+  }
+
+  .back-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+    color: var(--accent);
+  }
+
+  .detail-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+
+  .detail-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .detail-port-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border-radius: 12px;
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    min-width: 110px;
+  }
+
+  .detail-port-box .num {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .detail-port-box .lbl {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.8);
+    margin-top: 0.5rem;
+  }
+
+  .detail-title h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-title p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .detail-desc {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+  }
+
+  .detail-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .meta-box {
+    background: var(--bg-hover);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--card-border);
+  }
+
+  .meta-box .meta-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .meta-box .meta-val {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .example-box {
+    background: #0d1117;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .example-box pre {
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .comment { color: #6b7280; }
+  .cmd { color: #00ff88; font-weight: 700; }
+  .str { color: #ff9e64; }
+
+  #no-result {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    #page {
+      grid-template-columns: 1fr;
+    }
+    #sidebar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #page { padding: 0; }
+    #list-view { padding: 1rem; }
+    #detail { padding: 1rem; }
+    
+    .card {
+      grid-template-columns: 60px 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .tag { font-size: 0.7rem; }
+
+    header h1 { font-size: 1.6rem; }
+    .detail-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="page">
+  <div id="list-view">
+    <header>
+      <h1>البورتات الشهيرة 🌐</h1>
+      <p>شرح مفصل لأشهر البورتات والبروتوكولات</p>
+    </header>
+
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="ابحث عن بورت أو خدمة..." onkeyup="filterCards()">
+    </div>
+
+    <div id="grid"></div>
+    <div id="no-result">لا توجد نتائج 😔</div>
+  </div>
+
+  <div id="detail">
+    <button class="back-btn" onclick="showList()">← رجوع</button>
+    <div class="detail-card">
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div class="sidebar-title">الفئات</div>
+    <div class="category-list">
+      <button class="cat-btn" onclick="filterByCategory('web')">🌐 ويب</button>
+      <button class="cat-btn" onclick="filterByCategory('email')">📧 إيميل</button>
+      <button class="cat-btn" onclick="filterByCategory('file')">📁 ملفات</button>
+      <button class="cat-btn" onclick="filterByCategory('remote')">🖥️ ريموت</button>
+      <button class="cat-btn" onclick="filterByCategory('dns')">🔍 DNS</button>
+      <button class="cat-btn" onclick="filterByCategory('net')">🔗 شبكة</button>
+      <button class="cat-btn" onclick="filterByCategory('db')">💾 قاعدة بيانات</button>
+      <button class="cat-btn" onclick="filterByCategory('sec')">🔒 أمان</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ports = [
+  {
+    port: 80, service: "HTTP", proto: "TCP", cat: "web",
+    short: "تصفح الويب",
+    desc: "HTTP (HyperText Transfer Protocol) هو البروتوكول الأساسي لنقل البيانات على الويب. بورت 80 هو البورت الافتراضي للمتصفح. كل لما تكتب عنوان في المتصفح بدون HTTPS، المتصفح بيبعت request على بورت 80. المشكلة إن البيانات مش مشفرة خالص.",
+    use: "مواقع بسيطة، APIs، تطبيقات الويب",
+    risk: "مش آمن! بيانات plain text. لو عامل نقل بيانات مهمة، استخدم HTTPS (443) دايماً.",
+    example: `<span class="comment"># طلب صفحة بسيط</span>
+<span class="cmd">curl</span> http://example.com
+
+<span class="comment"># المتصفح بيعمل نفس الحاجة تلقائياً</span>
+GET / HTTP/1.1
+Host: <span class="str">example.com</span>`
+  },
+  {
+    port: 443, service: "HTTPS", proto: "TCP", cat: "web",
+    short: "تصفح الويب المشفر",
+    desc: "HTTPS هو HTTP مع طبقة تشفير TLS فوقيه. كل البيانات اللي بتتبعت أو بتستقبل بتبقى مشفرة، يعني حتى لو حد عمل اعتراض للشبكة، مش هيعرف يقرأ حاجة. الأقفال الخضرا في المتصفح ده معناها HTTPS شغال.",
+    use: "كل المواقع اللي فيها بيانات مستخدمين، بنوك، متاجر، أي حاجة محتاج تبعت فيها بيانات",
+    risk: "لو شهادة TLS منتهية أو من مصدر غير موثوق، فيه خطر. دايماً تحقق من صلاحية الشهادة.",
+    example: `<span class="comment"># طلب HTTPS بـ curl</span>
+<span class="cmd">curl</span> -I https://example.com
+
+<span class="comment"># شوف معلومات الشهادة</span>
+<span class="cmd">openssl</span> s_client -connect example.com:<span class="str">443</span>`
+  },
+  {
+    port: 53, service: "DNS", proto: "TCP/UDP", cat: "dns",
+    short: "ترجمة أسماء المواقع",
+    desc: "DNS (Domain Name System) هو 'دليل التليفون' للإنترنت. لما بتكتب google.com، جهازك بيبعت سؤال على بورت 53 لسيرفر DNS عشان يجيب الـ IP Address الخاص بالموقع. بدون DNS، كنت هتكتب أرقام زي 142.250.185.46 عشان تفتح جوجل.",
+    use: "ترجمة Domain Names → IP Addresses، lookup عكسي، MX records للإيميل",
+    risk: "DNS Spoofing خطر لو مش بتستخدم DNSSEC. استخدم DNS موثوق زي 1.1.1.1 أو 8.8.8.8.",
+    example: `<span class="comment"># استعلام DNS عادي</span>
+<span class="cmd">nslookup</span> google.com
+
+<span class="comment"># استعلام تفصيلي</span>
+<span class="cmd">dig</span> google.com A`
+  },
+  {
+    port: 25, service: "SMTP", proto: "TCP", cat: "email",
+    short: "إرسال الإيميلات",
+    desc: "SMTP (Simple Mail Transfer Protocol) هو البروتوكول المسؤول عن إرسال الإيميلات. لما بتضغط Send في Gmail أو Outlook، الإيميل بيتبعت عن طريق SMTP. بورت 25 ده خاص بالتواصل بين السيرفرات (server-to-server)، بينما المستخدم العادي بيستخدم 587.",
+    use: "إرسال إيميلات بين سيرفرات، mail relay، تطبيقات بتبعت notifications",
+    risk: "بورت 25 كثير ISPs بتحجبوه لمنع الـ spam. استخدم 587 مع authentication للإرسال من تطبيقات.",
+    example: `<span class="comment"># اختبار اتصال SMTP</span>
+<span class="cmd">telnet</span> mail.example.com <span class="str">25</span>
+
+<span class="comment"># أو بـ Python</span>
+import smtplib
+smtp = smtplib.SMTP(<span class="str">'smtp.gmail.com'</span>, 587)`
+  },
+  {
+    port: 21, service: "FTP", proto: "TCP", cat: "file",
+    short: "نقل الملفات",
+    desc: "FTP (File Transfer Protocol) بروتوكول قديم لنقل الملفات بين جهازك والسيرفر. بيستخدم بورتين: 21 للأوامر (command channel) و 20 للبيانات (data channel). المشكلة الكبيرة إنه مش مشفر خالص — كلمة السر والملفات كلها بتتبعت plain text.",
+    use: "رفع ملفات على hosting قديم، نقل ملفات داخل شبكات خاصة",
+    risk: "⚠️ خطر جداً على الإنترنت العام! استخدم SFTP (على SSH بورت 22) أو FTPS بدلاً منه.",
+    example: `<span class="comment"># اتصال FTP بسيط</span>
+<span class="cmd">ftp</span> ftp.example.com
+
+<span class="comment"># أو بـ lftp (أفضل)</span>
+<span class="cmd">lftp</span> -u username ftp.example.com`
+  },
+  {
+    port: 3306, service: "MySQL", proto: "TCP", cat: "db",
+    short: "قاعدة بيانات MySQL",
+    desc: "ده البورت اللي MySQL و MariaDB بيستمعوا عليه للاتصالات الواردة. لما تطبيقك بيحتاج يقرأ أو يكتب في قاعدة البيانات، بيتصل على بورت 3306. أغلب مشاريع الويب (PHP + MySQL، Laravel، WordPress) بتستخدمه.",
+    use: "اتصال تطبيقات الويب بقاعدة البيانات، مزامنة البيانات، database administration",
+    risk: "لا تفتح ده للإنترنت أبداً! خليه يقبل اتصالات من localhost أو IP معين بس.",
+    example: `<span class="comment"># اتصال بـ MySQL</span>
+<span class="cmd">mysql</span> -h 127.0.0.1 -P 3306 -u root -p
+
+<span class="comment"># في كود Python</span>
+conn = mysql.connect(host=<span class="str">'localhost'</span>, port=<span class="str">3306</span>)`
+  },
+  {
+    port: 3389, service: "RDP", proto: "TCP/UDP", cat: "remote",
+    short: "سطح مكتب ويندوز عن بُعد",
+    desc: "RDP (Remote Desktop Protocol) هو بروتوكول مايكروسوفت للتحكم في ويندوز عن بُعد بـ GUI كامل. زي إنك قاعد أمام الكومبيوتر بالظبط بس عن بُعد. كتير جداً في الشركات للوصول لأجهزة العمل من البيت.",
+    use: "remote work، IT support، الوصول لسيرفرات ويندوز",
+    risk: "ده بورت بيتهاجم كتير على الإنترنت. لو محتاج تفتحه، استخدم VPN أو غير البورت الافتراضي.",
+    example: `<span class="comment"># من ويندوز — شغل Run ثم</span>
+mstsc /v:<span class="str">192.168.1.10</span>
+
+<span class="comment"># من Linux بـ rdesktop</span>
+<span class="cmd">rdesktop</span> 192.168.1.10:3389`
+  },
+  {
+    port: 8080, service: "HTTP-Alt", proto: "TCP", cat: "web",
+    short: "ويب سيرفر تاني (dev)",
+    desc: "بورت 8080 هو بديل شائع لبورت 80 لما بتشتغل على development أو بتشغل تطبيق ويب على نفس الجهاز. كتير من frameworks زي Spring Boot و Node.js و Tomcat بتستخدمه افتراضياً، لأن فتح بورت 80 الأصلي محتاج صلاحيات root.",
+    use: "تطوير المواقع محلياً، proxies، application servers زي Tomcat",
+    risk: "لو شغال على production، تأكد إن في firewall يحمي البورت ده.",
+    example: `<span class="comment"># Node.js على بورت 8080</span>
+app.listen(<span class="str">8080</span>, () => console.log(<span class="str">'running'</span>))
+
+<span class="comment"># اختبار</span>
+<span class="cmd">curl</span> http://localhost:8080`
+  },
+  {
+    port: 123, service: "NTP", proto: "UDP", cat: "net",
+    short: "مزامنة الوقت",
+    desc: "NTP (Network Time Protocol) مسؤول عن مزامنة ساعة جهازك مع سيرفرات الوقت على الإنترنت. ممكن يبدو بسيط بس في الحقيقة مهم جداً — لو الوقت غلط على سيرفر، هتحصل مشاكل في الـ SSL certificates، الـ logs، والـ authentication.",
+    use: "مزامنة الوقت على سيرفرات وأجهزة الشبكة، distributed systems",
+    risk: "NTP Amplification attacks ممكن تستخدمه في DDoS. الـ firewalls بتتعامل معاه عادةً.",
+    example: `<span class="comment"># فحص الوقت الحالي</span>
+<span class="cmd">ntpdate</span> -q pool.ntp.org
+
+<span class="comment"># Linux: شوف حالة المزامنة</span>
+<span class="cmd">timedatectl</span> status`
+  },
+  {
+    port: 143, service: "IMAP", proto: "TCP", cat: "email",
+    short: "قراءة الإيميل من السيرفر",
+    desc: "IMAP (Internet Message Access Protocol) بيخليك تقرأ إيميلاتك من السيرفر من غير ما تنزلها على جهازك. الفرق بينه وبين POP3 إنك تقدر تفتح نفس الإيميل من تليفونك وكومبيوترك وكل حاجة متزامنة، لأن الرسائل فاضلة على السيرفر.",
+    use: "mail clients زي Thunderbird و Outlook، apps بتتصل بـ Gmail أو Outlook",
+    risk: "استخدم IMAPS (بورت 993) مع TLS بدل 143 العادي المش مشفر.",
+    example: `<span class="comment"># اتصال IMAP يدوي</span>
+<span class="cmd">openssl</span> s_client -connect mail.example.com:<span class="str">993</span>
+
+<span class="comment"># Python - قراءة إيميلات</span>
+import imaplib
+mail = imaplib.IMAP4_SSL(<span class="str">'imap.gmail.com'</span>)`
+  },
+];
+
+const uniquePorts = ports.filter((p, i, arr) => arr.findIndex(x => x.port === p.port) === i);
+const tagClass = { web:'t-web', email:'t-email', file:'t-file', remote:'t-remote', dns:'t-dns', net:'t-net', db:'t-db', sec:'t-sec' };
+const tagLabel = { web:'ويب', email:'إيميل', file:'ملفات', remote:'ريموت', dns:'DNS', net:'شبكة', db:'قاعدة بيانات', sec:'أمان' };
+
+function buildGrid(data) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  data.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <div class="card-port">${p.port}</div>
+      <div class="card-info">
+        <div class="card-service">${p.service}</div>
+        <div class="card-short">${p.short}</div>
+        <div class="card-proto">${p.proto}</div>
+      </div>
+      <span class="tag ${tagClass[p.cat]||''}">${tagLabel[p.cat]||p.cat}</span>
+    `;
+    div.onclick = () => showDetail(p);
+    grid.appendChild(div);
+  });
+  document.getElementById('no-result').style.display = data.length ? 'none' : 'block';
+}
+
+function filterCards() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = uniquePorts.filter(p =>
+    String(p.port).includes(q) ||
+    p.service.toLowerCase().includes(q) ||
+    (tagLabel[p.cat]||'').includes(q) ||
+    p.short.includes(q)
+  );
+  buildGrid(filtered);
+}
+
+function filterByCategory(cat) {
+  const filtered = uniquePorts.filter(p => p.cat === cat);
+  buildGrid(filtered);
+}
+
+function showDetail(p) {
+  document.getElementById('list-view').style.display = 'none';
+  document.getElementById('detail').style.display = 'block';
+
+  const riskColor = p.risk && p.risk.includes('⚠️') ? 'var(--danger)' : 'var(--success)';
+  const riskIcon = p.risk && p.risk.includes('⚠️') ? '⚠️' : '💡';
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-head">
+      <div class="detail-port-box">
+        <div class="num">${p.port}</div>
+        <div class="lbl">PORT</div>
+      </div>
+      <div class="detail-title">
+        <h2>${p.service}</h2>
+        <p>${p.short}</p>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span class="tag ${tagClass[p.cat]||''}">${tagLabel[p.cat]||p.cat}</span>
+          <span style="font-size:0.8rem;color:var(--text-secondary)">${p.proto}</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-title">شرح</p>
+    <div class="detail-desc">${p.desc || 'قريباً...'}</div>
+
+    <div class="detail-meta">
+      <div class="meta-box">
+        <div class="meta-label">البروتوكول</div>
+        <div class="meta-val">${p.proto}</div>
+      </div>
+      <div class="meta-box">
+        <div class="meta-label">الفئة</div>
+        <div class="meta-val">${tagLabel[p.cat]||p.cat}</div>
+      </div>
+    </div>
+
+    ${p.use ? `
+    <p class="section-title">الاستخدامات</p>
+    <div style="color:var(--text-primary);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem">${p.use}</div>` : ''}
+
+    ${p.risk ? `
+    <p class="section-title">ملاحظة أمنية</p>
+    <div style="background:rgba(${p.risk.includes('⚠️') ? '239,68,68' : '16,185,129'},0.1);border:1.5px solid ${riskColor};border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:0.95rem;line-height:1.8;color:var(--text-primary)">
+      ${riskIcon} ${p.risk}
+    </div>` : ''}
+
+    ${p.example ? `
+    <p class="section-title">مثال عملي</p>
+    <div class="example-box"><pre>${p.example}</pre></div>` : ''}
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showList() {
+  document.getElementById('detail').style.display = 'none';
+  document.getElementById('list-view').style.display = 'block';
+  filterCards();
+}
+
+buildGrid(uniquePorts);
+</script>
+
+</body>
+</html>
